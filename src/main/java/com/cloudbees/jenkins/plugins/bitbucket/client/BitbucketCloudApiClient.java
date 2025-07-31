@@ -467,7 +467,7 @@ public class BitbucketCloudApiClient extends AbstractBitbucketApi implements Bit
      */
     @Override
     public void registerCommitWebHook(@NonNull BitbucketWebHook hook) throws IOException {
-        logger.log(Level.INFO,  () -> "[ZD267879]** Register new commit hook " + hook.getUrl());
+        logger.log(Level.INFO, () -> "[ZD267879]** Register new commit hook " + hook.getUrl());
         String url = UriTemplate.fromTemplate(REPO_URL_TEMPLATE + "/hooks")
                 .set("owner", owner)
                 .set("repo", repositoryName)
@@ -480,7 +480,7 @@ public class BitbucketCloudApiClient extends AbstractBitbucketApi implements Bit
      */
     @Override
     public void updateCommitWebHook(@NonNull BitbucketWebHook hook) throws IOException {
-        logger.log(Level.INFO,  () -> "[ZD267879]** Updating commit hook " + hook.getUrl());
+        logger.log(Level.INFO, () -> "[ZD267879]** Updating commit hook " + hook.getUrl());
 
         String url = UriTemplate.fromTemplate(REPO_URL_TEMPLATE + "/hooks/{hook}")
                 .set("owner", owner)
@@ -495,7 +495,7 @@ public class BitbucketCloudApiClient extends AbstractBitbucketApi implements Bit
      */
     @Override
     public void removeCommitWebHook(@NonNull BitbucketWebHook hook) throws IOException {
-        logger.log(Level.INFO,  () -> "[ZD267879]** removing commit hook " + hook.getUrl());
+        logger.log(Level.INFO, () -> "[ZD267879]** removing commit hook " + hook.getUrl());
         if (StringUtils.isBlank(hook.getUuid())) {
             throw new BitbucketException("Hook UUID required");
         }
