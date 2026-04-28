@@ -1061,6 +1061,17 @@ public class BitbucketSCMSource extends SCMSource {
                     "Unauthorized to validate Server URL"); // not supposed to be seeing this form
             }
             if (!BitbucketEndpointProvider.lookupEndpoint(value).isPresent()) {
+                // When the form initializes a new SCM source, the serverUrl field defaults to
+                // BitbucketCloudEndpoint.SERVER_URL. If the admin has removed the default cloud
+                // endpoint and configured only Bitbucket Server endpoints, the initial validation
+                // fires against the stale default URL. Return a warning instead of an error so the
+                // form is not blocked before the user has a chance to select from the dropdown.
+                if (BitbucketCloudEndpoint.SERVER_URL.equals(value)
+                        && !BitbucketEndpointProvider.all().isEmpty()) {
+                    return FormValidation.warning(
+                            "Default Bitbucket Cloud endpoint is not registered. "
+                                    + "Please select your Bitbucket Server endpoint from the dropdown.");
+                }
                 return FormValidation.error("Unregistered Server: " + value);
             }
             return FormValidation.ok();
